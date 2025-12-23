@@ -1,16 +1,20 @@
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { toggleHabit } from "../features/habits/habitsSlice";
-import type { RootState } from "../app/store";
+import {
+  selectHabitStreak,
+  selectHabits,
+} from "../features/habits/habitsSelectors";
 
 function HabitList() {
   const dispatch = useDispatch();
 
-  const habits = useSelector((state: RootState) => state.habits.habits);
+  const habits = useSelector(selectHabits);
   return (
     <div>
       <ul>
         {habits.map((habit) => {
+          const streak = selectHabitStreak(habit);
           const today = new Date().toISOString().slice(0, 10);
           const isDoneToday = habit.completedDates.includes(today);
 
@@ -20,7 +24,7 @@ function HabitList() {
               style={{ cursor: "pointer" }}
               key={habit.id}
             >
-              {isDoneToday ? "✅" : "⬜"} {habit.title}
+              {isDoneToday ? "✅" : "⬜"} {habit.title} - 🔥 {streak}
             </li>
           );
         })}

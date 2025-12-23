@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type Habit = {
+export type Habit = {
   id: string;
   title: string;
   completedDates: string[];
@@ -36,30 +36,6 @@ export const habitsSlice = createSlice({
     },
   },
 });
-
-export const selectHabitStreak = (habit: Habit) => {
-  const dates = habit.completedDates; // ["2025-09-18", "2025-09-20"]
-
-  if (dates.length === 0) return 0;
-
-  const set = new Set(dates);
-
-  let streak = 0;
-  let current = new Date();
-
-  while (true) {
-    const day = current.toISOString().slice(0, 10);
-
-    if (set.has(day)) {
-      streak++;
-      current.setDate(current.getDate() - 1);
-    } else {
-      break;
-    }
-  }
-
-  return streak;
-};
 
 export const { addHabit, toggleHabit } = habitsSlice.actions;
 export default habitsSlice.reducer;
