@@ -20,11 +20,43 @@ function HabitList() {
 
           return (
             <li
+              className={`
+                flex items-center justify-between
+    px-4 py-3 rounded-xl
+    m-4
+    cursor-pointer select-none
+    border
+    transition-all duration-200
+    hover:scale-[1.01]
+    active:scale-[0.97]
+    ${
+      isDoneToday
+        ? "bg-emerald-600/20 border-emerald-500"
+        : "bg-zinc-800 hover:bg-zinc-700 border-zinc-700"
+    }
+            `}
               onClick={() => dispatch(toggleHabit(habit.id))}
               style={{ cursor: "pointer" }}
               key={habit.id}
             >
-              {isDoneToday ? "✅" : "⬜"} {habit.title} - 🔥 {streak}
+              <span
+                className={`
+                    text-xl transition-transform duration-200
+                    ${isDoneToday ? "scale-110" : "scale-100"}
+                `}
+              >
+                {isDoneToday ? "✅" : "⬜"} {habit.title} — 🔥{" "}
+                {
+                  <span
+                    className={`
+                        text-sm font-semibold text-orange-400
+                        ${streak > 0 ? "animate-pulse" : ""}
+                    `}
+                  >
+                    {streak}
+                  </span>
+                }
+              </span>
             </li>
           );
         })}
